@@ -1,43 +1,33 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { connect } from 'react-redux'
+import { sayHello } from '../actions'
 
-class App extends Component {
-  constructor(props){
-    super(props)
-    this.state ={
-      counter:0
-    }
-  }
-  incrementCounter(){
-    //we change the state of counter
-    // set state
-    this.setState({
-      counter:this.state.counter +1
-    });
-  }
-  decrementCounter(){
-    //change state counter
-    this.setState({
-      counter:this.state.counter -1
-    });
-  }
-  
-    render() {
-      return (
-        <div className="App">
-  <p> {this.state.counter}</p>
-          <button onClick={this.incrementCounter.bind(this)}>Increase</button>
-          <button onClick={this.decrementCounter.bind(this)}>decrement</button>
-  
-  
-          
-        </div>
-      );
-    }
-  }
-  
-  export default App;
-  
+let  Button = ({ whatsUp, stateObject, saySomething }) => (
+  <div >
+      <button onClick={saySomething}>
+          PRESS TO DISPATCH FIRST ACTION
+      </button>
+      <h2>{Increment}</h2>
+      <button onClick={()=> console.log('Redux State:',stateObject)} >
+          Press to inspect STATE in console panel
+      </button>
+    </div>
+  )
 
-
+ 
+  
+       
+const mapStateToProps = (state) => ({
+  whatsUp: state.say,
+  stateObject: state
+})
+const mapDispatchToProps = (dispatch) => ({
+  saySomething: () => { dispatch(sayHello())}
+})
+Button = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Button)
+export default Button;
